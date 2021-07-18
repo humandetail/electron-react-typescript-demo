@@ -31,7 +31,9 @@
     "start:electron": "wait-on http://localhost:3000 && electron app",
     "build-icon": "electron-icon-builder --input=./icons/icon.png --flatten",
     "build:win": "npm run build:copy && npm run pack:win",
-    "pack:win": "electron-builder --win"
+    "pack:win": "electron-builder --win",
+    "build:mac": "npm run build:copy && npm run pack:mac",
+    "pack:mac": "electron-builder --mac"
   },
   "eslintConfig": {
     "extends": [
@@ -68,46 +70,56 @@
     "productName": "Electron-React-Typescript-Demo",
     "copyright": "Copyright © 2021 Humandetail",
     "extends": null,
-    "files": ["build/**/*"],
+    "files": [
+      "build/**/*"
+    ],
     "mac": {
-      "target": ["dmg", "zip"],
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "category": "public.app-category.utilities",
       "icon": "icons/icon.icns"
     },
     "win": {
-      "target": ["msi","nsis"],
+      "target": [
+        "msi",
+        "nsis"
+      ],
       "icon": "icons/icon.png"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "icons/icon.png"
     },
-    "nsis": {                          
+    "nsis": {
       "oneClick": false,
       "language": "2052",
       "perMachine": true,
       "allowToChangeInstallationDirectory": true
     },
     "dmg": {
-      "background": "build/background.jfif",
-      "icon": "build/icons/icon.icns",
+      "icon": "icons/icon.icns",
       "iconSize": 100,
       "contents": [
-         {
-           "x": 380,
-           "y": 180,
-           "type": "link",
-           "path": "/Applications"
-         },
-         {
-           "x": 130,
-           "y": 180,
-           "type": "file"
-         }
+        {
+          "x": 380,
+          "y": 180,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 180,
+          "type": "file"
+        }
       ],
       "window": {
-         "width": 540,
-         "height": 380
+        "width": 540,
+        "height": 380
       }
     },
     "extraMetadata": {
