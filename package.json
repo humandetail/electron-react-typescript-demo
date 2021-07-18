@@ -1,0 +1,120 @@
+{
+  "name": "react-electron-typescript-demo",
+  "version": "0.1.0",
+  "private": true,
+  "main": "app/index.js",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "electron-is-dev": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.1.2",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run start:react\" \"npm run start:electron\"",
+    "start:react": "cross-env BROWSER=none react-app-rewired start",
+    "build": "npm run build:copy && npm run pack",
+    "build:react": "react-app-rewired build",
+    "build:copy": "npm run build:react && npm run copy:electron",
+    "pack": "electron-builder",
+    "copy:electron": "cp -r ./app/. ./build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "start:electron": "wait-on http://localhost:3000 && electron app",
+    "build-icon": "electron-icon-builder --input=./icons/icon.png --flatten",
+    "build:win": "npm run build:copy && npm run pack:win",
+    "pack:win": "electron-builder --win"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "devtron": "^1.4.0",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7",
+    "electron-debug": "^3.2.0",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-icon-builder": "^2.0.1",
+    "react-app-rewired": "^2.1.8",
+    "wait-on": "^6.0.0"
+  },
+  "build": {
+    "appId": "com.electron.react-electron-ts-demo",
+    "productName": "Electron-React-Typescript-Demo",
+    "copyright": "Copyright © 2021 Humandetail",
+    "extends": null,
+    "files": ["build/**/*"],
+    "mac": {
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.utilities",
+      "icon": "icons/icon.icns"
+    },
+    "win": {
+      "target": ["msi","nsis"],
+      "icon": "icons/icon.png"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "icons/icon.png"
+    },
+    "nsis": {                          
+      "oneClick": false,
+      "language": "2052",
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "dmg": {
+      "background": "build/background.jfif",
+      "icon": "build/icons/icon.icns",
+      "iconSize": 100,
+      "contents": [
+         {
+           "x": 380,
+           "y": 180,
+           "type": "link",
+           "path": "/Applications"
+         },
+         {
+           "x": 130,
+           "y": 180,
+           "type": "file"
+         }
+      ],
+      "window": {
+         "width": 540,
+         "height": 380
+      }
+    },
+    "extraMetadata": {
+      "main": "build/index.js"
+    },
+    "directories": {
+      "buildResources": "assets"
+    }
+  }
+}
